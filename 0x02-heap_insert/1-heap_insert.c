@@ -16,6 +16,14 @@ int heap_size(heap_t *root)
 	return (left + right + 1);
 }
 
+/**
+ * insert_level_order - Function that inserts a node into a Max Binary Heap
+ * @root: Pointer to the root node of the Heap
+ * @idx: current index in heap
+ * @size: size of the heap
+ * @value: The value store in the node to be inserted
+ * Return: Pointer to the inserted node, or NULL on failure
+ */
 heap_t *insert_level_order(heap_t *root, int idx, int size, int value)
 {
 	heap_t *left, *right;
@@ -39,6 +47,11 @@ heap_t *insert_level_order(heap_t *root, int idx, int size, int value)
 	return (right);
 }
 
+/**
+ * swap - Function that swaps two integers
+ * @a: pointer to a int
+ * @b: pointer to another int
+ */
 void swap(int *a, int *b)
 {
 	int tmp = *a;
