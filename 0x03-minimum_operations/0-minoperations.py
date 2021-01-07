@@ -11,11 +11,13 @@ def minOperations(n):
         return 0
     operations = 0
     current_length = 1
+    copy_lenght = 0
     while current_length < n:
         if n % current_length == 0:
             # copy all
             operations += 1
+            copy_lenght = current_length
         # paste
         operations += 1
-        current_length += current_length
+        current_length += copy_lenght
     return operations
