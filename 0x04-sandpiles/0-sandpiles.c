@@ -22,11 +22,11 @@ static void print_grid(int grid[3][3])
 }
 
 /**
- * grid_is_stable - Function that determines if a grid is stable or not
+ * is_stable - Function that determines if a grid is stable or not
  * @grid: the grid
  * Return: 1 if grid is stable, 0 if not
  */
-int grid_is_stable(int grid[3][3])
+int is_stable(int grid[3][3])
 {
 	int i, j;
 
@@ -48,15 +48,14 @@ int grid_is_stable(int grid[3][3])
  */
 void sandpiles_sum(int grid1[3][3], int grid2[3][3])
 {
-	int i, j, is_stable, t;
+	int i, j, stable, tmp[3][3] = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
 
 	for (i = 0; i < 3; i++)
 	{
 		for (j = 0; j < 3; j++)
 			grid1[i][j] += grid2[i][j];
 	}
-	is_stable = grid_is_stable(grid1);
-	for (; is_stable == 0; is_stable = grid_is_stable(grid1))
+	for (stable = is_stable(grid1); !stable; stable = is_stable(grid1))
 	{
 		printf("=\n");
 		print_grid(grid1);
@@ -64,20 +63,26 @@ void sandpiles_sum(int grid1[3][3], int grid2[3][3])
 		{
 			for (j = 0; j < 3; j++)
 			{
-				if (grid1[i][j] > 3)
+				if (grid1[i][j] >= 4)
 				{
-					is_stable = 1;
-					t = 1;
-					grid1[i][j] -= 4 * t;
-					if (i > 0)
-						grid1[i - 1][j] += 1 * t;
-					if (j > 0)
-						grid1[i][j - 1] += 1 * t;
-					if (i < 2)
-						grid1[i + 1][j] += 1 * t;
-					if (j < 2)
-						grid1[i][j + 1] += 1 * t;
+					grid1[i][j] -= 4;
+					if ((i - 1) >= 0)
+						tmp[i - 1][j] += 1;
+					if ((j - 1) >= 0)
+						tmp[i][j - 1] += 1;
+					if ((i + 1) <= 2)
+						tmp[i + 1][j] += 1;
+					if ((j + 1) <= 2)
+						tmp[i][j + 1] += 1;
 				}
+			}
+		}
+		for (i = 0; i < 3; i++)
+		{
+			for (j = 0; j < 3; j++)
+			{
+				grid1[i][j] += tmp[i][j];
+				tmp[i][j] = 0;
 			}
 		}
 	}
