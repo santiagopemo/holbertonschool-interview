@@ -25,7 +25,7 @@ int is_palindrome_recursion(listint_t **h, listint_t *tmp)
  */
 int is_palindrome(listint_t **head)
 {
-	listint_t **h = head;
+	listint_t *h = *head;
 
-	return (is_palindrome_recursion(h, *head));
+	return (is_palindrome_recursion(&h, *head));
 }
