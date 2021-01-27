@@ -6,7 +6,7 @@ import sys
 def print_metrics(status_codes, file_size):
     """function to print status codes and total file size"""
     print("File size: {}".format(file_size))
-    for k, v in status_codes.items():
+    for k, v in sorted(status_codes.items()):
         if v > 0:
             print("{}: {}".format(k, v))
 
@@ -33,7 +33,8 @@ try:
         if counter == 10:
             print_metrics(status_codes, file_size)
             counter = 1
-        counter += 1
+        else:
+            counter += 1
 except KeyboardInterrupt:
     print_metrics(status_codes, file_size)
     raise
