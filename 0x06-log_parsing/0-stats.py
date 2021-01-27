@@ -5,10 +5,10 @@ import sys
 
 def print_metrics(status_codes, file_size):
     """function to print status codes and total file size"""
+    print("File size: {}".format(file_size))
     for k, v in status_codes.items():
         if v > 0:
             print("{}: {}".format(k, v))
-    print("File size: {}".format(file_size))
 
 
 status_codes = {
