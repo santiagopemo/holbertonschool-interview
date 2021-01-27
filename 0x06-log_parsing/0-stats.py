@@ -25,8 +25,8 @@ counter = 1
 file_size = 0
 try:
     for line in sys.stdin:
-        splited_line = line.strip().split(" ")
-        if len(splited_line) != 9:
+        splited_line = line.split()
+        if len(splited_line) < 7:
             continue
         file_size += int(splited_line[-1])
         status_code = splited_line[-2]
