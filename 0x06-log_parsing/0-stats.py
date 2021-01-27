@@ -35,6 +35,7 @@ try:
             counter = 1
         else:
             counter += 1
+        print_metrics(status_codes, file_size)
 except KeyboardInterrupt:
     print_metrics(status_codes, file_size)
     raise
