@@ -25,7 +25,7 @@ counter = 1
 file_size = 0
 try:
     for line in sys.stdin:
-        splited_line = line.strip().split(" ")
+        splited_line = line.split(" ")
         file_size += int(splited_line[-1])
         status_code = splited_line[-2]
         if status_code in status_codes:
