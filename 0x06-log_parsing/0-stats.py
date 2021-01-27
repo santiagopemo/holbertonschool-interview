@@ -32,7 +32,7 @@ try:
             status_codes[status_code] += 1
         if counter == 10:
             print_metrics(status_codes, file_size)
-            counter = 0
+            counter = 1
         counter += 1
 except KeyboardInterrupt:
     print_metrics(status_codes, file_size)
