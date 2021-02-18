@@ -7,7 +7,6 @@ def validUTF8(data):
     Method that determines if a given data
     set represents a valid UTF-8 encoding
     """
-    print(data)
     for number in data:
         b_index = bin(number).find("b")
         data_byte = bin(number)[b_index + 1:]
