@@ -8,7 +8,6 @@ def validUTF8(data):
     set represents a valid UTF-8 encoding
     """
     continuation = False
-    char_length = 0
     for number in data:
         data_byte = bin(number).replace("0b", "").rjust(8, "0")
         if (len(data_byte) > 8):
@@ -26,7 +25,6 @@ def validUTF8(data):
                 return False
             if char_length == 1:
                 continuation = False
-                char_length = 0
-    if char_length != 0:
+    if continuation:
         return False
     return True
