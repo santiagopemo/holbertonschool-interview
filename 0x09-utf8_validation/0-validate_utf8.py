@@ -13,6 +13,6 @@ def validUTF8(data):
         if (len(data_byte) > 8):
             data_byte = data_byte[-8:]
         length = data_byte.find("0")
-        if (length > 4 or length == -1):
+        if (length > 4 or length <= 0):
             return False
     return True
