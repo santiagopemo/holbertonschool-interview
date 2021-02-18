@@ -11,6 +11,8 @@ def validUTF8(data):
     char_length = 0
     for number in data:
         data_byte = bin(number).replace("0b", "").rjust(8, "0")
+        if (len(data_byte) > 8):
+            data_byte = data_byte[-8:]
         if continuation is False:
             if data_byte[0] == "0":
                 continue
