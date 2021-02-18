@@ -20,10 +20,11 @@ def validUTF8(data):
             continuation = True
         else:
             char_length -= 1
-            if char_length == 0:
-                continuation = False
-            elif data_byte[0: 2] != "10":
+            if data_byte[0: 2] != "10":
                 return False
+            if char_length == 1:
+                continuation = False
+                char_length = 0
     if char_length != 0:
         return False
     return True
