@@ -17,9 +17,9 @@ void menger(int level)
 			{
 				if (ti % 3 == 1 && tj % 3 == 1)
 				{
-					putchar(' ');	
+					putchar(' ');
 					break;
-				}					
+				}
 			}
 			if (ti == 0 || tj == 0)
 				putchar('#');
