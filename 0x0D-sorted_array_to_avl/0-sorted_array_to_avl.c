@@ -12,7 +12,7 @@ avl_t *create_avl(int left, int right, avl_t *root, int *array)
 {
 	int idx;
 	avl_t *new;
-	
+
 	if (left > right)
 		return (NULL);
 	idx = left + (right - left) / 2;
@@ -37,5 +37,5 @@ avl_t *sorted_array_to_avl(int *array, size_t size)
 
 	if (array == NULL)
 		return (NULL);
-	return create_avl(0, size - 1, root, array);
+	return (create_avl(0, size - 1, root, array));
 }
