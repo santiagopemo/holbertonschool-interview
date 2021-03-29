@@ -16,7 +16,7 @@
 * Don’t forget to push your header file
 * All your header files should be include guarded
 ## Compilation
-* `gcc -Wall -Wextra -Werror -pedantic 0-main.c 0-linear_skip.c skiplist/*.c  -lm -o 0-linear_skip`
+* `gcc -Wall -Wextra -Werror -pedantic 0-main.c 0-linear_skip.c skiplist/*.c -I. -lm -o 0-linear_skip`
 
 ## Tasks
 ### Mandatory :page_with_curl:
