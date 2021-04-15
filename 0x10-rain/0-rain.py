@@ -9,15 +9,16 @@ def rain(walls):
     Funciton that calculate how much water will be retained after it rains
     """
     water = 0
-    i = 0
-    while i < len(walls):
-        if walls[i] > 0:
-            j = i + 1
-            while j < len(walls):
-                if walls[j] > 0:
-                    water += ((j - i - 1) * min(walls[i], walls[j]))
-                    i = j - 1
-                    break
-                j += 1
-        i += 1
+    higher_idx = 0
+    while higher_idx < len(walls) - 1:
+        i = higher_idx
+        while i < len(walls):
+            if walls[i] >= walls[higher_idx]:
+                j = higher_idx
+                while j < i:
+                    water += walls[higher_idx] - walls[j]
+                    j += 1
+                higher_idx = i
+            i += 1
+        walls[higher_idx] -= 1
     return water
