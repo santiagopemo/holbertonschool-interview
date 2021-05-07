@@ -37,4 +37,4 @@ def count_words(subreddit, word_list, after='', words_dict={}):
             if value != 0:
                 print(f'{word}: {value}')
         return
-    count_words(subreddit, word_list, after, words_dict)
+    return count_words(subreddit, word_list, after, words_dict)
