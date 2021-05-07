@@ -30,6 +30,6 @@ def count_words(subreddit, word_list, after="", words_dict={}):
         sort_alpha = sorted(sort_value, key=lambda i: i[1], reverse=True)
         for word, value in sort_alpha:
             if value != 0:
-                print('{}: {}'.format(word, value))
+                print('{}: {}'.format(word.lower(), value))
         return
     return count_words(subreddit, word_list, after, words_dict)
