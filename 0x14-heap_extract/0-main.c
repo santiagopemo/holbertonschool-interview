@@ -43,5 +43,17 @@ int main(void)
     printf("Extracted: %d\n", extract);
     binary_tree_print(tree);
     _binary_tree_delete(tree);
+
+    tree = NULL;
+    int newArr[] = {4};
+    tree = _array_to_heap(newArr, 1);
+    if (!tree)
+        return (1);
+    binary_tree_print(tree);
+    extract = heap_extract(&tree);
+    printf("Extracted: %d\n", extract);
+    binary_tree_print(tree);
+
+    _binary_tree_delete(tree);
     return (0);
 }

@@ -50,6 +50,12 @@ int heap_extract(heap_t **root)
 	extracted_value = (*root)->n;
 	height = heap_height(*root);
 	node = last_node(*root, height);
+	if (height == 1)
+	{
+		free(node);
+		*root = NULL;
+		return(extracted_value);
+	}
 	if (node->parent->left == node)
 		node->parent->left = NULL;
 	else
