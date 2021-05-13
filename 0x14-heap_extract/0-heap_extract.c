@@ -41,12 +41,15 @@ heap_t *last_node(heap_t *root, int heigth)
  */
 int heap_extract(heap_t **root)
 {
-	int extracted_value = (*root)->n;
-	int height = heap_height(*root);
-	heap_t *node = last_node(*root, height);
+	int extracted_value;
+	int height;
+	heap_t *node;
 	/*printf("\n%d\n", height);*/
 	if (root == NULL || *root == NULL)
 		return (0);
+	extracted_value = (*root)->n;
+	height = heap_height(*root);
+	node = last_node(*root, height);
 	if (node->parent->left == node)
 		node->parent->left = NULL;
 	else
