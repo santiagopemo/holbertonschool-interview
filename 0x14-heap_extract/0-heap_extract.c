@@ -45,6 +45,8 @@ int heap_extract(heap_t **root)
 	int height = heap_height(*root);
 	heap_t *node = last_node(*root, height);
 	/*printf("\n%d\n", height);*/
+	if (root == NULL || *root == NULL)
+		return (0);
 	if (node->parent->left == node)
 		node->parent->left = NULL;
 	else
