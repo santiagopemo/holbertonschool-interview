@@ -1,7 +1,11 @@
 #include "binary_trees.h"
-#include <stdio.h>
 #include <stdlib.h>
 
+/**
+ * swap - swaps two values in memory
+ * @a: pointer to first value
+ * @b: pointer to second value
+ */
 void swap(int *a, int *b)
 {
 	int tmp = *a;
@@ -9,6 +13,12 @@ void swap(int *a, int *b)
 	*a = *b;
 	*b = tmp;
 }
+
+/**
+ * heap_height - calculates the height of a heap
+ * @root: heap's root node
+ * Return: the height of the tree
+ */
 int heap_height(heap_t *root)
 {
 	int left, right;
@@ -17,22 +27,54 @@ int heap_height(heap_t *root)
 		return (0);
 	left = heap_height(root->left);
 	right = heap_height(root->right);
-	return (left > right ? left + 1 : right + 1);	
+	return (left > right ? left + 1 : right + 1);
 }
-heap_t *last_node(heap_t *root, int heigth)
+
+/**
+ * last_node - returns the last level orderer node
+ * @root: heap's root node
+ * @height: heap's height
+ * Return: pointer to node, NULL if fails
+ */
+heap_t *last_node(heap_t *root, int height)
 {
 	heap_t *left, *right;
 
 	if (root == NULL)
 		return (NULL);
-	if (heigth == 1)
+	if (height == 1)
+		return (root);
+	left = last_node(root->left, height - 1);
+	right = last_node(root->right, height - 1);
+	return (right == NULL ? left : right);
+}
+
+/**
+ * fix_heap - returns the last level orderer node
+ * @root: heap's root node
+ * Return: pointer to node, NULL if fails
+ */
+void fix_heap(heap_t *root)
+{
+	heap_t *node, *to_swap;
+
+	for (node = to_swap = root; node != NULL; node = to_swap)
 	{
-		/*printf("%d ", root->n);*/
-		return root;
-	}		
-	left = last_node(root->left, heigth - 1);
-	right = last_node(root->right, heigth - 1);
-	return (right == NULL ? left : right);	
+		if (node->right && node->left)
+		{
+			if (node->right->n > node->left->n && node->right->n > node->n)
+				to_swap = node->right;
+			else if (node->left->n > node->right->n && node->left->n > node->n)
+				to_swap = node->left;
+		}
+		else if (node->right && node->right->n > node->n)
+			to_swap = node->right;
+		else if (node->left && node->left->n > node->n)
+			to_swap = node->left;
+		else
+			break;
+		swap(&to_swap->n, &node->n);
+	}
 }
 /**
  * heap_extract - Extracts the root node of a Max Binary Heap
@@ -41,10 +83,9 @@ heap_t *last_node(heap_t *root, int heigth)
  */
 int heap_extract(heap_t **root)
 {
-	int extracted_value;
-	int height;
+	int extracted_value, height;
 	heap_t *node;
-	/*printf("\n%d\n", height);*/
+
 	if (root == NULL || *root == NULL)
 		return (0);
 	extracted_value = (*root)->n;
@@ -54,7 +95,7 @@ int heap_extract(heap_t **root)
 	{
 		free(node);
 		*root = NULL;
-		return(extracted_value);
+		return (extracted_value);
 	}
 	if (node->parent->left == node)
 		node->parent->left = NULL;
@@ -62,35 +103,6 @@ int heap_extract(heap_t **root)
 		node->parent->right = NULL;
 	(*root)->n = node->n;
 	free(node);
-	for(node = *root; node != NULL;)
-	{
-		if (node->right && node->left)
-		{
-			if(node->right->n > node->left->n && node->right->n > node->n)
-			{
-				swap(&node->right->n, &node->n);
-				node = node->right;
-			}
-			else if(node->left->n > node->right->n && node->left->n > node->n)
-			{
-				swap(&node->left->n, &node->n);
-				node = node->left;
-			}
-		}
-		else if (node->right && node->right->n > node->n)
-		{
-			swap(&node->right->n, &node->n);
-			node = node->right;
-		}
-		else if (node->left && node->left->n > node->n)
-		{
-			swap(&node->left->n, &node->n);
-			node = node->left;
-		}
-		else
-		{
-			break;
-		}
-	}
-	return(extracted_value);
+	fix_heap(*root);
+	return (extracted_value);
 }
