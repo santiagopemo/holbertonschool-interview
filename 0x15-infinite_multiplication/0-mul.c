@@ -1,82 +1,80 @@
 #include "holberton.h"
 #include <stdio.h>
 
-int *multiplication(char *num1, int len1, char *num2, int len2)
-{
-	int i, j, mul, *res;
-
-	res = malloc((len2 + len1) * sizeof(int));
-	if (res == NULL)
-	{
-		print_string("Error\n");
-		exit (98);
-	}
-	for (i = 0; i < len1 + len2; i++) res[i] = 0;
-	for (i = len2 - 1; i >= 0; i--)
-	{
-		for (j = len1 - 1; j >= 0; j--)
-		{
-			mul = (num2[i] - '0') * (num1[j] - '0');
-			res[i + j + 1] += mul % 10;
-			res[i + j] += mul / 10;
-			if (res[i + j + 1] >= 10)
-			{
-				res[i + j] += res[i + j + 1] / 10;
-				res[i + j + 1] %= 10;
-			}			
-		}
-	}
-	return (res);	
-}
-
-void print_string(char *str)
-{
-	int i;
-
-	for (i = 0; str[i] != '\0'; i++)
-	{
-		_putchar(str[i]);
-	}
-}
-
-int num_len(char *num)
+int _isdigit(char *n)
 {
 	int i = 0;
 
-	for (; num[i] != '\0'; i++)
+	while (*(n + i) != '\0')
 	{
-		if (num[i] < 48 || num[i] > 57)
-			return (-1);
+		if (*(n + i) < 48 || *(n + i++) > 57)
+			return (0);
 	}
-	return (i);
+	return (1);
 }
-/**
- * main - program that multiplies two positive numbers.
- *
- * Return: 0 un success, 98 if not.
- */
-int main(int argc, char **argv)
-{
-	int i, len1, len2, *res;
 
-	if (argc < 3)
+int _strlen(char *s)
+{
+	return (*s != '\0' ? 1 + _strlen(++s) : 0);
+}
+
+void manual_mul(int *total, char *argv[], int d1_len, int d2_len)
+{
+	int product, result, i, j;
+
+	for (i = (d2_len - 1); i >= 0; i--)
 	{
-		print_string("Error\n");
-		exit (98);
+		result = 0;
+		for (j = (d1_len - 1); j >= 0; j--)
+		{
+			product = (argv[2][i] - '0') * (argv[1][j] - '0');
+			result =  (product / 10);
+			total[(i + j) + 1] += (product % 10);
+			if (total[(i + j) + 1] > 9)
+			{
+				total[i + j] += total[(i + j) + 1] / 10;
+				total[(i + j) + 1] = total[(i + j) + 1] % 10;
+			}
+			total[(i + j)] += result;
+		}
 	}
-	len1 = num_len(argv[1]);
-	len2 = num_len(argv[2]);
-	if (len1 == -1 || len2 == -1)
+
+}
+
+/**
+ * main - the entry point
+ * @argc:the number of argumentes
+ * @argv: the arguments to be multiplicated
+ * Return: return 0 in success 98 in error.
+ */
+int main(int argc, char *argv[])
+{
+	int d1_len, d2_len, i;
+	int *total;
+
+	if (argc != 3 || !(_isdigit(argv[1])) || !(_isdigit(argv[2])))
 	{
-		print_string("Error\n");
+		puts("Error");
 		exit(98);
 	}
-	res = multiplication(argv[1], len1, argv[2], len2);
-	if (!res[0]) i = 1;
-	else i = 0;
-	for (; i < len1 + len2; i++)
-		_putchar(res[i] + '0');
-	_putchar('\n');
-	free (res);
+	if (argv[1][0] == '0' || argv[2][0] == '0')
+	{
+		printf("0\n");
+		return (0);
+	}
+	d1_len = _strlen(argv[1]);
+	d2_len = _strlen(argv[2]);
+	total = calloc(d1_len + d2_len, sizeof(int));
+	if (!total)
+	{
+		puts("Error");
+		exit(98);
+	}
+	manual_mul(total, argv, d1_len, d2_len);
+	i = *total == 0 ? 1 : 0;
+	for (; i < (d1_len + d2_len); i++)
+		printf("%d", total[i]);
+	printf("\n");
+	free(total);
 	return (0);
 }
