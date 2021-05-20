@@ -1,58 +1,32 @@
 #include "holberton.h"
 #include <stdio.h>
 
-char *digit_mul_rev(char * num1, int len_num1, char digit, int zeros)
+int *multiplication(char *num1, int len1, char *num2, int len2)
 {
-	int i, len_malloc, mul, k;
-	char *rev_result;
+	int i, j, mul, *res;
 
-	len_malloc = len_num1 * sizeof(char) + 2 + zeros;
-	rev_result = malloc(len_malloc);
-	for (i = 0; i < zeros; i++)
-		rev_result[i] = '0';
-	len_num1--;
-	for (k = 0; len_num1 >= 0 ; i++, len_num1--)
+	res = malloc((len2 + len1) * sizeof(int));
+	if (res == NULL)
 	{
-		mul = (num1[len_num1] - '0') * (digit - '0') + k;
-		
-		rev_result[i] = (char)((mul % 10) + '0');
-		k = mul / 10;
+		print_string("Error\n");
+		exit (98);
 	}
-	if (k > 0)
+	for (i = 0; i < len1 + len2; i++) res[i] = 0;
+	for (i = len2 - 1; i >= 0; i--)
 	{
-		rev_result[i] = (char)(k + '0');
-		i++;
+		for (j = len1 - 1; j >= 0; j--)
+		{
+			mul = (num2[i] - '0') * (num1[j] - '0');
+			res[i + j + 1] += mul % 10;
+			res[i + j] += mul / 10;
+			if (res[i + j + 1] >= 10)
+			{
+				res[i + j] += res[i + j + 1] / 10;
+				res[i + j + 1] %= 10;
+			}			
+		}
 	}
-	rev_result[i] = '\0';
-	return (rev_result);
-}
-
-char *str_rev_sum(char *num1, int len1, char* num2, int len2)
-{
-	int i, j, k, l, a, b, sum, len_malloc;
-	char *res;
-
-	len_malloc = (len1 > len2 ? len1 : len2) + 2;
-	res = malloc(sizeof(char) * len_malloc);
-	for (i = j = k = l = 0; num2[j] != '\0'; l++)
-	{
-		a = num1[i] != '\0' ? (num1[i] - '0') : 0;
-		b = num2[j] != '\0' ? (num2[j] - '0') : 0;
-		sum = a + b + k;
-		res[l] = (char)((sum % 10) + '0');
-		k = sum / 10;
-		if (i < len1)
-			i++;
-		if (j < len2)
-			j++;
-	}
-	if (k > 0)
-	{
-		res[l] = (char)(k + '0');
-		l++;
-	}
-	res[l] = '\0';
-	return (res);
+	return (res);	
 }
 
 void print_string(char *str)
@@ -69,7 +43,7 @@ int num_len(char *num)
 {
 	int i = 0;
 
-	for (i = 0; num[i] != '\0'; i++)
+	for (; num[i] != '\0'; i++)
 	{
 		if (num[i] < 48 || num[i] > 57)
 			return (-1);
@@ -83,8 +57,7 @@ int num_len(char *num)
  */
 int main(int argc, char **argv)
 {
-	int i, j, len1, len2;
-	char *mul, *res, *tmp;
+	int i, len1, len2, *res;
 
 	if (argc < 3)
 	{
@@ -96,24 +69,14 @@ int main(int argc, char **argv)
 	if (len1 == -1 || len2 == -1)
 	{
 		print_string("Error\n");
-		exit (98);
+		exit(98);
 	}
-	res = malloc(sizeof(char) * 2);
-	res[0] = '0';
-	res[1] = '\0';
-	for (i = 0, j = len2 - 1; i < len2; i++, j--)
-	{
-		mul = digit_mul_rev(argv[1], len1, argv[2][j], i);
-		tmp = res;
-		res = str_rev_sum(res, num_len(res), mul, num_len(mul));
-		free(tmp);
-		free(mul);
-	}
-	for (i = num_len(res) - 1; i >= 0; i--)
-	{
-		_putchar(res[i]);
-	}
-	print_string("\n");
-	free(res);
+	res = multiplication(argv[1], len1, argv[2], len2);
+	if (!res[0]) i = 1;
+	else i = 0;
+	for (; i < len1 + len2; i++)
+		_putchar(res[i] + '0');
+	_putchar('\n');
+	free (res);
 	return (0);
 }
