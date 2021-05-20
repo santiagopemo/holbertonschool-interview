@@ -1,7 +1,8 @@
 #include "holberton.h"
 
 /**
- * multiplication - returns pointer to array with the result of a multiplication
+ * multiplication - returns pointer to array with the result of a 
+ * multiplication between two numbers
  * @num1: pointer to string representing a number
  * @len1: lenght of num1
  * @num2: pointer to string representing a number
