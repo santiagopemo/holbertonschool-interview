@@ -18,12 +18,12 @@ int *multiplication(char *num1, int len1, char *num2, int len2)
 		{
 			mul = (num2[i] - '0') * (num1[j] - '0');
 			res[i + j + 1] += mul % 10;
-			res[i + j] += mul / 10;
 			if (res[i + j + 1] >= 10)
 			{
 				res[i + j] += res[i + j + 1] / 10;
 				res[i + j + 1] %= 10;
 			}
+			res[i + j] += mul / 10;
 		}
 	}
 	return (res);
