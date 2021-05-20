@@ -5,5 +5,6 @@
 
 int _putchar(char c);
 int char_to_int(char c);
+void print_string(char *);
 
 #endif
