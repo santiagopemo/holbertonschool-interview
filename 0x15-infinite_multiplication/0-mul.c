@@ -1,5 +1,13 @@
 #include "holberton.h"
 
+/**
+ * multiplication - returns pointer to array with the result of a multiplication
+ * @num1: pointer to string representing a number
+ * @len1: lenght of num1
+ * @num2: pointer to string representing a number
+ * @len2: lenght of num2
+ * Return: pointer to array with the result
+ */
 int *multiplication(char *num1, int len1, char *num2, int len2)
 {
 	int i, j, mul, *res;
@@ -29,6 +37,10 @@ int *multiplication(char *num1, int len1, char *num2, int len2)
 	return (res);
 }
 
+/**
+ * print_string - prints a string
+ * @str: the string
+ */
 void print_string(char *str)
 {
 	int i;
@@ -39,6 +51,11 @@ void print_string(char *str)
 	}
 }
 
+/**
+ * num_len - returns the lenght of a string representing a number
+ * @num: the string
+ * Return: int with the lenght, -1 if it is not a valid string
+ */
 int num_len(char *num)
 {
 	int i = 0;
@@ -52,7 +69,8 @@ int num_len(char *num)
 }
 /**
  * main - program that multiplies two positive numbers.
- *
+ * @argc: number of arguments
+ * @argv: array with arguments
  * Return: 0 un success, 98 if not.
  */
 int main(int argc, char **argv)
