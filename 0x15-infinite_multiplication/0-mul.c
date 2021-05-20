@@ -71,6 +71,11 @@ int main(int argc, char **argv)
 		print_string("Error\n");
 		exit(98);
 	}
+	if (argv[1][0] == '0' || argv[2][0] == '0')
+	{
+		print_string("0\n");
+		return (0);
+	}
 	res = multiplication(argv[1], len1, argv[2], len2);
 	if (!res[0])
 		i = 1;
