@@ -13,22 +13,22 @@ List *add_node_end(List **list, char *str)
 
 	new = malloc(sizeof(List));
 	if (new == NULL)
-		return(NULL);
+		return (NULL);
 	new->str = strdup(str);
 	if (new->str == NULL)
-		return (NULL);	
+		return (NULL);
 	if ((*list) == NULL)
 	{
 		new->next = new;
 		new->prev = new;
 		(*list) = new;
-		return(new);
+		return (new);
 	}
 	new->next = (*list);
 	new->prev = (*list)->prev;
 	(*list)->prev = new;
 	new->prev->next = new;
-	return(new);
+	return (new);
 }
 
 /**
@@ -43,7 +43,7 @@ List *add_node_begin(List **list, char *str)
 	List *new = add_node_end(list, str);
 
 	if (new == NULL)
-		return(NULL);
+		return (NULL);
 	(*list) = new;
-	return(new);
+	return (new);
 }
