@@ -8,7 +8,7 @@ int is_bst(const binary_tree_t *tree, int min, int max)
 		return (0);
 	if (tree->n > max)
 		return (0);
-	return (is_bst(tree->right, tree->n, max) && is_bst(tree->left, min, tree->n));
+	return (is_bst(tree->right, tree->n + 1, max) && is_bst(tree->left, min, tree->n - 1));
 }
 /**
  * binary_tree_height - function that measures the height of a binary tree
