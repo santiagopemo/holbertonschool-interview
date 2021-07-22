@@ -1,5 +1,12 @@
 #include "binary_trees.h"
 
+/**
+ * is_bst - check if a tree is a binary search tree
+ * @tree: root node
+ * @min: min value of the tree
+ * @max: max value of the tree
+ * Return: 1 if it is a BST, otherwise 0
+ */
 int is_bst(const binary_tree_t *tree, int min, int max)
 {
 	if (tree == NULL)
@@ -8,7 +15,8 @@ int is_bst(const binary_tree_t *tree, int min, int max)
 		return (0);
 	if (tree->n > max)
 		return (0);
-	return (is_bst(tree->right, tree->n + 1, max) && is_bst(tree->left, min, tree->n - 1));
+	return (is_bst(tree->right, tree->n + 1, max) &&
+			is_bst(tree->left, min, tree->n - 1));
 }
 /**
  * binary_tree_height - function that measures the height of a binary tree
@@ -38,6 +46,12 @@ int binary_tree_balance(const binary_tree_t *tree)
 		return (0);
 	return (binary_tree_height(tree->left) - binary_tree_height(tree->right));
 }
+
+/**
+ * overall_balance - check if a tree and all it's subtrees are balanced
+ * @tree: pointer to root node
+ * Return: 1 if is balanced, otherwise 0
+ */
 int overall_balance(const binary_tree_t *tree)
 {
 	int balance;
