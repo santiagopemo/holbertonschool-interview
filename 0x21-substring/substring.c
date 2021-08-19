@@ -9,7 +9,7 @@ void free_arr(char **arr, int len)
 {
 	int i;
 
-	for (int i = 0; i < len; i++)
+	for (i = 0; i < len; i++)
 		free(arr[i]);
 }
 
