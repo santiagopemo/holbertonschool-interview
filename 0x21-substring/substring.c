@@ -25,10 +25,7 @@ char **copy_memn(char **src, int len, int idx)
 	int i, j;
 	char **result;
 
-	if (idx == -1)
-		result = malloc(sizeof(char *) * (len));
-	else
-		result = malloc(sizeof(char *) * (len - 1));
+	result = malloc(sizeof(char *) * (len - 1));
 	for (i = 0, j = 0; i < len; i++)
 	{
 		if (i == idx)
@@ -85,23 +82,19 @@ int is_a_match(char const *s, char **words, int nb_words, int len_word)
 int *find_substring(char const *s, char const **words, int nb_words, int *n)
 {
 	int i, len_s, len_word, len_result = 0, *result;
-	char **tmp;
 
 	if (!s || !words || !n || nb_words == 0)
 		return (NULL);
 	len_s = strlen(s);
 	result = malloc(len_s * sizeof(int));
 	len_word = strlen(words[0]);
-	tmp = copy_memn((char **)words, nb_words, -1);
 	for (i = 0; i < len_s - (len_word * nb_words) + 1; i++)
 	{
-		if (is_a_match(s + i, tmp, nb_words, len_word))
+		if (is_a_match(s + i, (char **)words, nb_words, len_word))
 		{
 			result[len_result++] = i;
 		}
 	}
-	free_arr(tmp, nb_words);
-	free(tmp);
 	*n = len_result;
 	return (result);
 }
