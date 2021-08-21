@@ -1,66 +1,31 @@
 #include "substring.h"
 
 /**
- * free_arr - freez an array of strings
- * @arr: the array
- * @len: the array's lenght
- */
-void free_arr(char **arr, int len)
-{
-	int i;
-
-	for (i = 0; i < len; i++)
-		free(arr[i]);
-}
-
-/**
- * copy_memn - copy an array of strings, skipping the string at idx
- * @src: the source array
- * @len: the lenght of the array
- * @idx: the index to spik in the source array
- * Return: pointer the new array
- */
-char **copy_memn(char **src, int len, int idx)
-{
-	int i, j;
-	char **result;
-
-	result = malloc(sizeof(char *) * (len - 1));
-	for (i = 0, j = 0; i < len; i++)
-	{
-		if (i == idx)
-			continue;
-		result[j++] = strdup(src[i]);
-	}
-
-	return (result);
-}
-
-/**
  * is_a_match - check wheter is a match between s and the stings in words
  * @s: the string to scan
  * @words: the array of words all substringsmust be a concatenation
  * arrangement of
- * @nb_words: the number of elements in the array words
+ * @nb_words: the number of elements in the array words that are not NULL
  * @len_word: the lenght of the strings in words
+ * @n: the number of elements in the array words
  * Return: 1 if it is a macthc, otherwise 0
  */
-int is_a_match(char const *s, char **words, int nb_words, int len_word)
+int is_a_match(char const *s, char **words, int nb_words, int len_word, int n)
 {
 	int i, match;
-	char **tmp;
+	char *tmp;
 
 	if (nb_words == 0)
 		return (1);
 
-	for (i = 0; i < nb_words; i++)
+	for (i = 0; i < n; i++)
 	{
-		if (memcmp(s, words[i], len_word) == 0)
+		if (words[i] != NULL && memcmp(s, words[i], len_word) == 0)
 		{
-			tmp = copy_memn(words, nb_words, i);
-			match = is_a_match(s + len_word, tmp, nb_words - 1, len_word);
-			free_arr(tmp, nb_words - 1);
-			free(tmp);
+			tmp = words[i];
+			words[i] = NULL;
+			match = is_a_match(s + len_word, words, nb_words - 1, len_word, n);
+			words[i] = tmp;
 			return (match);
 		}
 	}
@@ -90,7 +55,7 @@ int *find_substring(char const *s, char const **words, int nb_words, int *n)
 	len_word = strlen(words[0]);
 	for (i = 0; i < len_s - (len_word * nb_words) + 1; i++)
 	{
-		if (is_a_match(s + i, (char **)words, nb_words, len_word))
+		if (is_a_match(s + i, (char **)words, nb_words, len_word, nb_words))
 		{
 			result[len_result++] = i;
 		}
