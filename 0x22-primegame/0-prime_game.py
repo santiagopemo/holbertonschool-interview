@@ -54,8 +54,6 @@ def isWinner(x, nums):
             elif not has_pick and current == "Ben":
                 maria_wins += 1
                 break
-    print(maria_wins)
-    print(ben_wins)
     if ben_wins > maria_wins:
         return "Ben"
     if ben_wins < maria_wins:
