@@ -33,7 +33,7 @@ def isWinner(x, nums):
             has_pick = False
             addition = 1
             while j < len(arr):
-                if is_prime(arr[j] and has_pick == False):
+                if is_prime(arr[j]) and not has_pick:
                     has_pick = True
                     addition = arr[j]
                 if has_pick:
